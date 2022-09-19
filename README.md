@@ -21,7 +21,7 @@ sfdx auth:web:login -d -a <alias>
 1. Create the source scratch org
 
 ```
-sfdx force:org:create -s -f config/project-scratch-def.json -a sourceorg
+sfdx force:org:create -s -f config/project-scratch-def.json -a sourceorg --durationdays 30
 ```
 
 2. Push source code to org
@@ -56,14 +56,14 @@ heroku addons:create herokuconnect:demo -a <app-name>
 
 7. Configure Heroku Connect
 
-Follow [documentation](https://devcenter.heroku.com/articles/quick-start-heroku-connect) from step 4 to configure Heroku connect; use `salesforce` as the schema(it's the default) and map all the standard fields for the Account Object.
+Follow [documentation](https://devcenter.heroku.com/articles/quick-start-heroku-connect) from step 4 to configure Heroku connect; auth to a sandbox using the sourceorg credentials, and verify identity/access. Use `salesforce` as the schema(it's the default) and map all the standard fields for the Account Object.
 
 #### Configure Target Org:
 
 1. Create the target scratch org
 
 ```
-sfdx force:org:create -s -f config/project-scratch-def.json -a targetorg
+sfdx force:org:create -s -f config/project-scratch-def.json -a targetorg --durationdays 30
 ```
 
 2. Push source code to org
@@ -108,7 +108,7 @@ sf env compute collaborator add --heroku-user <user_email_of_your_heroku_account
 8. Attach Postgres Database to Compute Environment
 
 ```
-heroku addons:attach <postgresql_database_name> -a <compute_environment_name>
+heroku addons:attach <postgresql_database_name> --app <compute_environment_name>
 ```
 
 9. Install pg_trgm Module in Postgresql
